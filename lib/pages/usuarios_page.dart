@@ -23,7 +23,6 @@ class _UsuariosPageState extends State<UsuariosPage> {
 
   @override
   void initState() {
-    _onLoading();
     super.initState();
   }
 
@@ -70,25 +69,46 @@ class _UsuariosPageState extends State<UsuariosPage> {
             )
           ],
         ),
-        body: SmartRefresher(
-          controller: _refreshController,
-          enablePullDown: true,
-          onRefresh: _cargarUsuarios,
-          onLoading: _cargarUsuarios,
-          header: WaterDropHeader(
-            complete: Icon(Icons.check, color: Colors.blue[400]),
-            waterDropColor: Colors.blue[400],
-          ),
-          child: _listViewUsuarios(),
-        ));
+        body: _crearlista());
+  }
+
+  FutureBuilder _crearlista() {
+    return FutureBuilder(
+      future: _onLoading(),
+      builder: (context, snapshot) {
+        if (snapshot.hasData) {
+          return SmartRefresher(
+            controller: _refreshController,
+            enablePullDown: true,
+            onRefresh: _cargarUsuarios,
+            onLoading: _cargarUsuarios,
+            header: WaterDropHeader(
+              complete: Icon(Icons.check, color: Colors.blue[400]),
+              waterDropColor: Colors.blue[400],
+            ),
+            child: _listViewUsuarios(),
+          );
+        } else {
+          return Center(
+              child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Text("preparando todo para ti..."),
+              Divider(),
+              CircularProgressIndicator(),
+            ],
+          ));
+        }
+      },
+    );
   }
 
   ListView _listViewUsuarios() {
-    return ListView.separated(
-        physics: BouncingScrollPhysics(),
-        itemBuilder: (_, i) => _usuarioListTile(usuarios[i]),
-        separatorBuilder: (_, i) => Divider(),
-        itemCount: usuarios.length);
+    return ListView.builder(
+      physics: BouncingScrollPhysics(),
+      itemCount: usuarios.length,
+      itemBuilder: (_, i) => _usuarioListTile(usuarios[i]),
+    );
   }
 
   ListTile _usuarioListTile(Usuario usuario) {
@@ -123,13 +143,13 @@ class _UsuariosPageState extends State<UsuariosPage> {
     _refreshController.refreshCompleted();
   }
 
-  void _onLoading() async {
+  Future<List<Usuario>> _onLoading() async {
     // monitor network fetch
     this.usuarios = await usuarioss.getUsuarios();
     // if failed,use loadFailed(),if no data return,use LoadNodata()
-
-    if (mounted) setState(() {});
-    _refreshController.loadComplete();
+    return usuarios;
+    // if (mounted) setState(() {});
+    // _refreshController.loadComplete();
   }
 
   _mensaje(String mensaje) {
