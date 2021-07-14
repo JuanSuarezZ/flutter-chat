@@ -15,7 +15,7 @@ class UsuariosPage extends StatefulWidget {
 }
 
 class _UsuariosPageState extends State<UsuariosPage> {
-  final usuarioService = new UsuariosService();
+  final usuarioss = new UsuariosService();
   RefreshController _refreshController =
       RefreshController(initialRefresh: false);
 
@@ -23,7 +23,7 @@ class _UsuariosPageState extends State<UsuariosPage> {
 
   @override
   void initState() {
-    this._cargarUsuarios();
+    _onLoading();
     super.initState();
   }
 
@@ -31,7 +31,6 @@ class _UsuariosPageState extends State<UsuariosPage> {
   Widget build(BuildContext context) {
     final authService = Provider.of<AuthService>(context);
     final socketService = Provider.of<SocketService>(context);
-
     final usuario = authService.usuario;
 
     return Scaffold(
@@ -75,6 +74,7 @@ class _UsuariosPageState extends State<UsuariosPage> {
           controller: _refreshController,
           enablePullDown: true,
           onRefresh: _cargarUsuarios,
+          onLoading: _cargarUsuarios,
           header: WaterDropHeader(
             complete: Icon(Icons.check, color: Colors.blue[400]),
             waterDropColor: Colors.blue[400],
@@ -115,12 +115,21 @@ class _UsuariosPageState extends State<UsuariosPage> {
   }
 
   _cargarUsuarios() async {
-    this.usuarios = await usuarioService.getUsuarios();
+    this.usuarios = await usuarioss.getUsuarios();
     setState(() {});
 
     // await Future.delayed(Duration(milliseconds: 1000));
     // if failed,use refreshFailed()
     _refreshController.refreshCompleted();
+  }
+
+  void _onLoading() async {
+    // monitor network fetch
+    this.usuarios = await usuarioss.getUsuarios();
+    // if failed,use loadFailed(),if no data return,use LoadNodata()
+
+    if (mounted) setState(() {});
+    _refreshController.loadComplete();
   }
 
   _mensaje(String mensaje) {
