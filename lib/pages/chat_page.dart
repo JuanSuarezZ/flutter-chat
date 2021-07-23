@@ -77,19 +77,23 @@ class _ChatPageState extends State<ChatPage> with TickerProviderStateMixin {
     final usuarioPara = chatService.usuarioPara;
 
     return Scaffold(
+      backgroundColor: Theme.of(context).backgroundColor,
       appBar: AppBar(
-        backgroundColor: Colors.white,
+        backgroundColor: Theme.of(context).hoverColor,
         title: Column(
           children: <Widget>[
             CircleAvatar(
-              child: Text(usuarioPara.nombre.substring(0, 2),
-                  style: TextStyle(fontSize: 12)),
+              child: Text(
+                usuarioPara.nombre.substring(0, 2),
+                style: TextStyle(fontSize: 12),
+              ),
               backgroundColor: Colors.blue[100],
               maxRadius: 14,
             ),
             SizedBox(height: 3),
             Text(usuarioPara.nombre,
-                style: TextStyle(color: Colors.black87, fontSize: 12))
+                style: TextStyle(
+                    color: Theme.of(context).accentColor, fontSize: 12))
           ],
         ),
         centerTitle: true,
@@ -110,7 +114,7 @@ class _ChatPageState extends State<ChatPage> with TickerProviderStateMixin {
 
             // TODO: Caja de texto
             Container(
-              color: Colors.white,
+              color: Theme.of(context).accentColor,
               child: _inputChat(),
             )
           ],
@@ -120,56 +124,73 @@ class _ChatPageState extends State<ChatPage> with TickerProviderStateMixin {
   }
 
   Widget _inputChat() {
-    return SafeArea(
-        child: Container(
-      margin: EdgeInsets.symmetric(horizontal: 8.0),
-      child: Row(
-        children: <Widget>[
-          Flexible(
-              child: TextField(
-            controller: _textController,
-            onSubmitted: _handleSubmit,
-            onChanged: (texto) {
-              setState(() {
-                if (texto.trim().length > 0) {
-                  _estaEscribiendo = true;
-                } else {
-                  _estaEscribiendo = false;
-                }
-              });
-            },
-            decoration: InputDecoration.collapsed(hintText: 'Enviar mensaje'),
-            focusNode: _focusNode,
-          )),
+    return Container(
+      color: Theme.of(context).hoverColor,
+      child: SafeArea(
+          child: Container(
+        margin: EdgeInsets.symmetric(horizontal: 8.0),
+        child: Row(
+          children: <Widget>[
+            Flexible(
+                child: TextField(
+              style: TextStyle(
+                color: Theme.of(context).accentColor,
+              ),
+              controller: _textController,
+              onSubmitted: _handleSubmit,
+              onChanged: (texto) {
+                setState(() {
+                  if (texto.trim().length > 0) {
+                    _estaEscribiendo = true;
+                  } else {
+                    _estaEscribiendo = false;
+                  }
+                });
+              },
+              decoration: InputDecoration.collapsed(
+                focusColor: Theme.of(context).accentColor,
+                fillColor: Theme.of(context).accentColor,
+                hoverColor: Theme.of(context).accentColor,
+                hintStyle: TextStyle(
+                  color: Theme.of(context).accentColor,
+                ),
+                hintText: 'Enviar mensaje',
+              ),
+              focusNode: _focusNode,
+            )),
 
-          // Botón de enviar
-          Container(
-            margin: EdgeInsets.symmetric(horizontal: 4.0),
-            child: Platform.isIOS
-                ? CupertinoButton(
-                    child: Text('Enviar'),
-                    onPressed: _estaEscribiendo
-                        ? () => _handleSubmit(_textController.text.trim())
-                        : null,
-                  )
-                : Container(
-                    margin: EdgeInsets.symmetric(horizontal: 4.0),
-                    child: IconTheme(
-                      data: IconThemeData(color: Colors.blue[400]),
-                      child: IconButton(
-                        highlightColor: Colors.transparent,
-                        splashColor: Colors.transparent,
-                        icon: Icon(Icons.send),
-                        onPressed: _estaEscribiendo
-                            ? () => _handleSubmit(_textController.text.trim())
-                            : null,
+            // Botón de enviar
+            Container(
+              margin: EdgeInsets.symmetric(horizontal: 4.0),
+              child: Platform.isIOS
+                  ? CupertinoButton(
+                      child: Text('Enviar'),
+                      onPressed: _estaEscribiendo
+                          ? () => _handleSubmit(_textController.text.trim())
+                          : null,
+                    )
+                  : Container(
+                      margin: EdgeInsets.symmetric(horizontal: 4.0),
+                      child: IconTheme(
+                        data: IconThemeData(color: Colors.blue[400]),
+                        child: IconButton(
+                          highlightColor: Colors.transparent,
+                          splashColor: Colors.transparent,
+                          icon: Icon(
+                            Icons.send,
+                            color: Theme.of(context).accentColor,
+                          ),
+                          onPressed: _estaEscribiendo
+                              ? () => _handleSubmit(_textController.text.trim())
+                              : null,
+                        ),
                       ),
                     ),
-                  ),
-          )
-        ],
-      ),
-    ));
+            )
+          ],
+        ),
+      )),
+    );
   }
 
   _handleSubmit(String texto) {

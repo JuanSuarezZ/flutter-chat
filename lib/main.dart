@@ -7,23 +7,39 @@ import 'package:chat/services/socket_service.dart';
 
 import 'package:chat/routes/routes.dart';
 
-void main() => runApp(MyApp());
- 
-class MyApp extends StatelessWidget {
+import 'services/customTheme_service.dart';
+
+void main() {
+  runApp(
+    ChangeNotifierProvider<ThemeNotifier>(
+      create: (_) => ThemeNotifier(),
+      child: MyApp(),
+    ),
+  );
+}
+
+class MyApp extends StatefulWidget {
+  @override
+  _MyAppState createState() => _MyAppState();
+}
+
+class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
+    final themeNotifier = Provider.of<ThemeNotifier>(context);
+    themeNotifier.getStorageTheme();
     return MultiProvider(
       providers: [
-        ChangeNotifierProvider(create: ( _ ) => AuthService() ),
-        ChangeNotifierProvider(create: ( _ ) => SocketService() ),
-        ChangeNotifierProvider(create: ( _ ) => ChatService() ),
+        ChangeNotifierProvider(create: (_) => AuthService()),
+        ChangeNotifierProvider(create: (_) => SocketService()),
+        ChangeNotifierProvider(create: (_) => ChatService()),
       ],
       child: MaterialApp(
-        debugShowCheckedModeBanner: false,
-        title: 'Chat App',
-        initialRoute: 'loading',
-        routes: appRoutes,
-      ),
+          debugShowCheckedModeBanner: false,
+          title: 'Chat App',
+          initialRoute: 'loading',
+          routes: appRoutes,
+          theme: themeNotifier.getTheme()),
     );
   }
 }

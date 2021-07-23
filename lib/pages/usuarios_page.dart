@@ -9,6 +9,8 @@ import 'package:chat/services/socket_service.dart';
 
 import 'package:chat/models/usuario.dart';
 
+import '../services/customTheme_service.dart';
+
 class UsuariosPage extends StatefulWidget {
   @override
   _UsuariosPageState createState() => _UsuariosPageState();
@@ -28,17 +30,20 @@ class _UsuariosPageState extends State<UsuariosPage> {
 
   @override
   Widget build(BuildContext context) {
+    final themeNotifier = Provider.of<ThemeNotifier>(context);
     final authService = Provider.of<AuthService>(context);
     final socketService = Provider.of<SocketService>(context);
     final usuario = authService.usuario;
 
     return Scaffold(
+        backgroundColor: Theme.of(context).backgroundColor,
         appBar: AppBar(
-          title: Text(usuario.nombre, style: TextStyle(color: Colors.black87)),
+          title: Text(usuario.nombre,
+              style: TextStyle(color: Theme.of(context).accentColor)),
           elevation: 1,
-          backgroundColor: Colors.white,
+          backgroundColor: Theme.of(context).hoverColor,
           leading: IconButton(
-            icon: Icon(Icons.exit_to_app, color: Colors.black87),
+            icon: Icon(Icons.exit_to_app, color: Theme.of(context).accentColor),
             onPressed: () {
               socketService.disconnect();
               Navigator.pushReplacementNamed(context, 'login');
@@ -66,7 +71,16 @@ class _UsuariosPageState extends State<UsuariosPage> {
                         _mensaje("No hay coneccion al servidor :(");
                       },
                     ),
-            )
+            ),
+            Container(
+                margin: EdgeInsets.only(right: 10),
+                child: IconButton(
+                  icon: Icon(Icons.settings),
+                  color: Theme.of(context).accentColor,
+                  onPressed: () {
+                    themeNotifier.setTheme();
+                  },
+                )),
           ],
         ),
         body: _crearlista());
@@ -113,8 +127,12 @@ class _UsuariosPageState extends State<UsuariosPage> {
 
   ListTile _usuarioListTile(Usuario usuario) {
     return ListTile(
-      title: Text(usuario.nombre),
-      subtitle: Text(usuario.email),
+      title: Text(
+        usuario.nombre,
+        style: TextStyle(color: Theme.of(context).accentColor),
+      ),
+      subtitle: Text(usuario.email,
+          style: TextStyle(color: Theme.of(context).accentColor)),
       leading: CircleAvatar(
         child: Text(usuario.nombre.substring(0, 2)),
         backgroundColor: Colors.blue[100],
