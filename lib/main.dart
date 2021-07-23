@@ -9,6 +9,7 @@ import 'package:chat/routes/routes.dart';
 
 import 'services/customTheme_service.dart';
 
+//main funtion
 void main() {
   runApp(
     ChangeNotifierProvider<ThemeNotifier>(
