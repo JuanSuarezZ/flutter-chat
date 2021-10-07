@@ -4,7 +4,9 @@ A new chat in Flutter project, developed in fernando herrera course (advanced fl
 
 Final result.
 
-<img src="assets/final_images/final_result.png" alt="Resultado final taller de flutter basico" title="Resultado final taller de flutter basico" height="500" />
+<img src="assets/img1.png" alt="Resultado final taller de flutter basico" title="Resultado final taller de flutter basico" height="500" />
+<img src="assets/img2.png" alt="Resultado final taller de flutter basico" title="Resultado final taller de flutter basico" height="500" />
+<img src="assets/img3.png" alt="Resultado final taller de flutter basico" title="Resultado final taller de flutter basico" height="500" />
 
 
 ## Getting Started
