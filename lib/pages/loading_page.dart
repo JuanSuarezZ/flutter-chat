@@ -5,6 +5,7 @@ import 'package:chat/services/socket_service.dart';
 import 'package:chat/services/auth_service.dart';
 
 class LoadingPage extends StatelessWidget {
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -39,4 +40,5 @@ class LoadingPage extends StatelessWidget {
       });
     }
   }
+  
 }

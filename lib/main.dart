@@ -40,7 +40,8 @@ class _MyAppState extends State<MyApp> {
           title: 'Chat App',
           initialRoute: 'loading',
           routes: appRoutes,
-          theme: themeNotifier.getTheme()),
+          theme: themeNotifier.getTheme()
+      ),
     );
   }
 }

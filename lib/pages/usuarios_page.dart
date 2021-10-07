@@ -120,7 +120,7 @@ class _UsuariosPageState extends State<UsuariosPage> {
   ListView _listViewUsuarios() {
     return ListView.builder(
       physics: BouncingScrollPhysics(),
-      itemCount: usuarios.length,
+      itemCount: usuarios.length - 1,
       itemBuilder: (_, i) => _usuarioListTile(usuarios[i]),
     );
   }

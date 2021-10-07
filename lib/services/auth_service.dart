@@ -10,6 +10,7 @@ import 'package:chat/models/login_response.dart';
 import 'package:chat/models/usuario.dart';
 
 class AuthService with ChangeNotifier {
+  
   Usuario usuario;
   bool _autenticando = false;
 
