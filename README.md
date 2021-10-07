@@ -7,8 +7,6 @@ Final result.
 <img src="assets/cap1.png" alt="Resultado final taller de flutter basico" title="Resultado final taller de flutter basico" height="500" />
 <img src="assets/cap2.png" alt="Resultado final taller de flutter basico" title="Resultado final taller de flutter basico" height="500" />
 <img src="assets/cap3.png" alt="Resultado final taller de flutter basico" title="Resultado final taller de flutter basico" height="500" />
-<img src="assets/cap4.png" alt="Resultado final taller de flutter basico" title="Resultado final taller de flutter basico" height="500" />
-<img src="assets/cap5.png" alt="Resultado final taller de flutter basico" title="Resultado final taller de flutter basico" height="500" />
 
 
 ## Getting Started
