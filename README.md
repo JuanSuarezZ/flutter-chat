@@ -1,6 +1,6 @@
 # chat
 
-A new chat in Flutter project, developed in fernando herrera course (advanced flutter) and added other functionalities like set theme in runtime.
+A chat Flutter project with nodejs server in heroku, developed in fernando herrera course (advanced flutter) and added other functionalities like set theme in runtime.
 
 Final result.
 
